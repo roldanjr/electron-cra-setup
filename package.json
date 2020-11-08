@@ -1,28 +1,41 @@
 {
-  "name": "basic-electron-cra-setup",
+  "name": "electron-cra-setup",
   "version": "0.1.0",
   "private": true,
-  "main": "public/main.js",
+  "main": "public/electron.js",
   "homepage": "./",
+  "author": {
+    "name": "Roldan Montilla Jr",
+    "email": "roldanjrmontilla@gmail.com",
+    "url": "https://github.com/roldanjr"
+  },
+  "description": "Basic Electron + CRA setup to get you started.",
   "scripts": {
-    "start": "react-scripts start",
-    "electron": "wait-on http://localhost:3000 && electron .",
-    "develop": "concurrently \"npm start\" \"npm run electron\"",
-    "build": "react-scripts build",
+    "start:react": "react-scripts start",
+    "build:react": "react-scripts build",
+    "eject": "react-scripts eject",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "clean": "rimraf dist/ build/",
+    "electron": "wait-on http://localhost:3000 && electron .",
+    "develop": "concurrently \"npm run start:react\" \"npm run electron\"",
+    "build:dir": "npm run build:react && electron-builder --dir",
+    "build:win": "npm run build:react && electron-builder --win",
+    "build:mac": "npm run build:react && electron-builder --mac",
+    "build:linux": "npm run build:react && electron-builder --linux",
+    "build:mwl": "npm run build:react && electron-builder  -mwl",
+    "release": "npm run build:react && electron-builder --publish always"
   },
   "build": {
-    "productName": "<your app name here>",
-    "appId": "com.<your company / owner's name>.<app name>",
+    "productName": "ElectronCRA",
+    "appId": "com.roldanjr.ElectronCRA",
     "copyright": "Copyright © 2020 ${author}",
     "files": [
       "build"
     ],
     "mac": {
-      "artifactName": "<your app name>-v${version}-mac.${ext}",
-      "category": "public.app-category.<category>",
-      "icon": "<icon location>/icon@2x.png"
+      "artifactName": "ElectronCRA-v${version}-mac.${ext}",
+      "category": "public.app-category.utility",
+      "icon": "./build/logo512.png"
     },
     "win": {
       "target": [
@@ -41,23 +54,23 @@
           ]
         }
       ],
-      "icon": "<icon location>/icon.ico"
+      "icon": "./build/logo.ico"
     },
     "portable": {
-      "artifactName": "<your app name>-v${version}-portable.${ext}"
+      "artifactName": "ElectronCRA-v${version}-portable.${ext}"
     },
     "nsis": {
-      "artifactName": "<your app name>-v${version}-setup.${ext}"
+      "artifactName": "ElectronCRA-v${version}-setup.${ext}"
     },
     "linux": {
-      "artifactName": "<your app name>-v${version}-linux.${ext}",
+      "artifactName": "ElectronCRA-v${version}-linux.${ext}",
       "target": [
         "AppImage",
         "deb",
         "rpm"
       ],
-      "icon": "<icon location>/icon.png",
-      "category": "<category>"
+      "icon": "./build/logo256.png",
+      "category": "utility"
     }
   },
   "dependencies": {
@@ -74,6 +87,7 @@
     "electron": "^10.1.5",
     "electron-builder": "^22.9.1",
     "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
     "wait-on": "^5.2.0"
   },
   "eslintConfig": {
